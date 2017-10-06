@@ -18,12 +18,6 @@ sysbasics_zsh_pkgs:
   - zsh
 sysbasics_ohmyzsh_repo: https://github.com/robbyrussell/oh-my-zsh
 sysbasics_ohmyzsh_enable: true
-sysbasics_ohmyzsh_plugins:
-  - git
-  - gem
-  - last-working-directory
-  - pip
-
 
 ##### DOTFILES ################################################
 ###############################################################
