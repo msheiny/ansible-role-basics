@@ -1,0 +1,23 @@
+---
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+  when: ansible_os_family == "Debian"
+
+- name: Install core pkgs
+  package:
+    name: "{{ item }}"
+  with_items: "{{ sysbasics_pkgs }}"
+
+- name: Check run-level
+  command: runlevel
+  register: runlevel_results
+  changed_when: false
+  check_mode: no
+
+- name: Install desktop-specific packages
+  package:
+    name: "{{ sysbasics_desktop_pkgs }}"
+  with_items: "{{ sysbasics_desktop_pkgs }}"
+  when: "runlevel_results.stdout.rstrip().endswith('5')"

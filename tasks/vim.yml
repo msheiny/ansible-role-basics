@@ -1,0 +1,18 @@
+---
+- block:
+    - name: Create vim directory.
+      file:
+        path: "~{{ sysbasics_username }}/.vim"
+        state: directory
+        mode: "0700"
+        owner: "{{ sysbasics_username }}"
+
+    - name: Install Vundle.
+      git:
+        repo: "{{ basics_vim_vundle_repo }}"
+        dest: "~{{ sysbasics_username }}/.vim/bundle/Vundle.vim"
+
+    - name: Install vim plugins.
+      command: vim +PluginInstall +qall
+
+  become_user: "{{ sysbasics_username }}

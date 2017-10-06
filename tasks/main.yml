@@ -1,0 +1,14 @@
+---
+
+- include: pkgs.yml
+  tags: pkg
+
+- include: zsh.yml
+  tags: zsh
+
+- include: homeshick.yml
+  tags: homeshick
+
+- include: gnome.yml
+  when: sysbasics_dconf_settings
+  tags: gnome
