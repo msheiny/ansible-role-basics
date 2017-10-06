@@ -1,5 +1,9 @@
 ---
 
+- name: Install dconf pre-requisites
+  package:
+    name: python2-psutil
+
 - block:
     - name: Build out list of dictionary items
       set_fact:
