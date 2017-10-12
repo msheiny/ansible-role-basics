@@ -39,21 +39,3 @@ sysbasics_dotfiles_shell_conf: .bashrc
 ##### VIM #####################################################
 ###############################################################
 sysbasics_vim_vundle_repo: https://github.com/VundleVim/Vundle.vim
-
-
-##### GNOME CONFIG ############################################
-###############################################################
-sysbasics_dconf_settings: {}
-
-# Here is an example of feeding in gnome settings. The underlying
-# module is a little weird and below is an example of quoting formats.
-# Notice strings are double quoted - "'string'" but booleans and other
-# types only need a single quote
-#
-#sysbasics_dconf_settings:
-#  /org/gnome/terminal/legacy:
-#    mnemonics-enabled: "true"
-#    menu-accelerator-enabled: "true"
-#    schema-version: "uint32 3"
-#    default-show-menubar: "false"
-#    theme-variant: "'dark'"
