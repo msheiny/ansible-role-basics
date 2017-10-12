@@ -15,4 +15,4 @@
     - name: Install vim plugins.
       command: vim +PluginInstall +qall
 
-  become_user: "{{ sysbasics_username }}
+  become_user: "{{ sysbasics_username }}"

@@ -6,5 +6,8 @@
 - include: zsh.yml
   tags: zsh
 
+- include: vim.yml
+  tags: vim
+
 - include: homeshick.yml
   tags: homeshick
