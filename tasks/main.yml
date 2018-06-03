@@ -1,5 +1,11 @@
 ---
 
+
+- name: Gather facts as regular remote user
+  setup:
+  become: no
+  tags: always
+
 - include: pkgs.yml
   tags: pkg
 
