@@ -1,0 +1,14 @@
+---
+
+- name: Configure user gitconfig
+  git_config:
+    value: "{{ item.value }}"
+    name: "{{ item.key }}"
+    scope: global
+  become: no
+  with_dict: "{{ sysbasics_git_config }}"
+
+- name: Enable git-lfs in config
+  command: git lfs install
+  when: sysbasics_gitlfs_config
+  become: no

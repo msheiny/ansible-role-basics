@@ -17,3 +17,6 @@
 
 - include: homeshick.yml
   tags: homeshick
+
+- import_tasks: git.yml
+  tags: git

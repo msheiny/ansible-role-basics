@@ -40,3 +40,18 @@ sysbasics_dotfiles_shell_conf: .bashrc
 ##### VIM #####################################################
 ###############################################################
 sysbasics_vim_vundle_repo: https://github.com/VundleVim/Vundle.vim
+
+##### GIT #####################################################
+###############################################################
+sysbasics_git_user_config: {}
+sysbasics_git_default_config:
+  core.editor: vim
+  color.ui: 'true'
+  alias.co: checkout
+  alias.cl: clone
+  pull.rebase: 'true'
+  gpg.program: /usr/bin/gpg2
+
+sysbasics_git_config: "{{ sysbasics_git_default_config | combine(sysbasics_git_user_config) }}"
+
+sysbasics_gitlfs_config: false
