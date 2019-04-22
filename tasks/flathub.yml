@@ -1,0 +1,15 @@
+---
+
+- name: Add the flathub flatpak repository remote
+  flatpak_remote:
+    name: "{{ item.name }}"
+    method: "{{ item.method|default('system') }}"
+    flatpakrepo_url: "{{ item.url }}"
+  loop: "{{ sysbasics_flatpak_remotes }}"
+
+- name: Install flatpak packages
+  flatpak:
+    name: "{{ item.name }}"
+    method: "{{ item.method|default('system') }}"
+    remote: "{{ item.remote|default('flathub') }}"
+  loop: "{{ sysbasics_flatpak_packages }}"

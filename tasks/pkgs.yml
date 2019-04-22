@@ -9,6 +9,7 @@
   package:
     name: "{{ item }}"
   with_items: "{{ sysbasics_pkgs }}"
+  when: "ansible_pkg_mgr != 'atomic_container'"
 
 - name: Check run-level
   command: runlevel
@@ -20,4 +21,6 @@
   package:
     name: "{{ sysbasics_desktop_pkgs }}"
   with_items: "{{ sysbasics_desktop_pkgs }}"
-  when: "runlevel_results.stdout.rstrip().endswith('5')"
+  when:
+    - "runlevel_results.stdout.rstrip().endswith('5')"
+    - "ansible_pkg_mgr != 'atomic_container'"

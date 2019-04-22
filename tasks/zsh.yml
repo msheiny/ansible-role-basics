@@ -3,6 +3,7 @@
   package:
     name: "{{ item }}"
   with_items: "{{ sysbasics_zsh_pkgs }}"
+  when: "ansible_pkg_mgr != 'atomic_container'"
 
 - name: Lookup zsh path
   command: which zsh

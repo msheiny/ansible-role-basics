@@ -20,3 +20,7 @@
 
 - import_tasks: git.yml
   tags: git
+
+- import_tasks: flathub.yml
+  tags: flatpak
+  when: "ansible_pkg_mgr == 'atomic_container'"

@@ -55,3 +55,13 @@ sysbasics_git_default_config:
 sysbasics_git_config: "{{ sysbasics_git_default_config | combine(sysbasics_git_user_config) }}"
 
 sysbasics_gitlfs_config: false
+
+##### FLATPAK #################################################
+###############################################################
+sysbasics_flatpak_remotes:
+  - name: flathub
+    url: https://dl.flathub.org/repo/flathub.flatpakrepo
+  - name: mozilla
+    url: https://firefox-flatpak.mojefedora.cz/org.mozilla.FirefoxRepo.flatpakrepo
+
+sysbasics_flatpak_packages: []
