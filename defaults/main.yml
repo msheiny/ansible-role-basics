@@ -2,11 +2,7 @@
 
 ##### PACKAGING ###############################################
 ###############################################################
-sysbasics_pkgs:
-  - git
-  - tmux
-  - tree
-  - htop
+sysbasics_pkgs: []
 
 sysbasics_desktop_pkgs: []
 
@@ -15,8 +11,7 @@ sysbasics_username: "{{ ansible_user_id }}"
 ##### SHELL ###################################################
 ###############################################################
 
-sysbasics_zsh_pkgs:
-  - zsh
+sysbasics_zsh_pkgs: []
 sysbasics_ohmyzsh_repo: https://github.com/robbyrussell/oh-my-zsh
 sysbasics_ohmyzsh_enable: true
 
@@ -65,3 +60,7 @@ sysbasics_flatpak_remotes:
     url: https://firefox-flatpak.mojefedora.cz/org.mozilla.FirefoxRepo.flatpakrepo
 
 sysbasics_flatpak_packages: []
+
+##### OSX / SilverBlue diversion ##############################
+###############################################################
+skip_pkg_tasks: "{{ true if ansible_pkg_mgr in ['atomic_container','homebrew'] else false }}"

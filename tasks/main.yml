@@ -7,6 +7,7 @@
   tags: always
 
 - include: pkgs.yml
+  when: not skip_pkg_tasks
   tags: pkg
 
 - include: zsh.yml
