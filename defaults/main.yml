@@ -47,9 +47,18 @@ sysbasics_git_default_config:
   pull.rebase: 'true'
   gpg.program: /usr/bin/gpg2
 
-sysbasics_git_config: "{{ sysbasics_git_default_config | combine(sysbasics_git_user_config) }}"
+sysbasics_git_lfs_raw_config:
+  filter.lfs.clean: git-lfs clean -- %f
+  filter.lfs.smudge: git-lfs smudge -- %f
+  filter.lfs.process: git-lfs filter-process
+  filter.lfs.required: 'true'
 
 sysbasics_gitlfs_config: false
+
+sysbasics_git_lfs_config: "{{ sysbasics_git_lfs_raw_config if sysbasics_gitlfs_config else {} }}"
+
+sysbasics_git_config: "{{ sysbasics_git_default_config | combine(sysbasics_git_user_config) | combine(sysbasics_git_lfs_config) }}"
+
 
 ##### FLATPAK #################################################
 ###############################################################
