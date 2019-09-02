@@ -2,11 +2,7 @@
 
 ##### PACKAGING ###############################################
 ###############################################################
-sysbasics_pkgs:
-  - git
-  - tmux
-  - tree
-  - htop
+sysbasics_pkgs: []
 
 sysbasics_desktop_pkgs: []
 
@@ -15,8 +11,7 @@ sysbasics_username: "{{ ansible_user_id }}"
 ##### SHELL ###################################################
 ###############################################################
 
-sysbasics_zsh_pkgs:
-  - zsh
+sysbasics_zsh_pkgs: []
 sysbasics_ohmyzsh_repo: https://github.com/robbyrussell/oh-my-zsh
 sysbasics_ohmyzsh_enable: true
 
@@ -52,9 +47,18 @@ sysbasics_git_default_config:
   pull.rebase: 'true'
   gpg.program: /usr/bin/gpg2
 
-sysbasics_git_config: "{{ sysbasics_git_default_config | combine(sysbasics_git_user_config) }}"
+sysbasics_git_lfs_raw_config:
+  filter.lfs.clean: git-lfs clean -- %f
+  filter.lfs.smudge: git-lfs smudge -- %f
+  filter.lfs.process: git-lfs filter-process
+  filter.lfs.required: 'true'
 
 sysbasics_gitlfs_config: false
+
+sysbasics_git_lfs_config: "{{ sysbasics_git_lfs_raw_config if sysbasics_gitlfs_config else {} }}"
+
+sysbasics_git_config: "{{ sysbasics_git_default_config | combine(sysbasics_git_user_config) | combine(sysbasics_git_lfs_config) }}"
+
 
 ##### FLATPAK #################################################
 ###############################################################
@@ -65,3 +69,11 @@ sysbasics_flatpak_remotes:
     url: https://firefox-flatpak.mojefedora.cz/org.mozilla.FirefoxRepo.flatpakrepo
 
 sysbasics_flatpak_packages: []
+
+##### SilverBlue diversion ####################################
+###############################################################
+skip_pkg_tasks: "{{ true if ansible_pkg_mgr in ['atomic_container'] else false }}"
+
+##### OSX #####################################################
+###############################################################
+sysbasics_cask_accept_external_apps: true
