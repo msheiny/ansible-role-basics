@@ -1,39 +1,38 @@
 ---
-- name: Install core zsh pkgs
-  package:
-    name: "{{ item }}"
-  with_items: "{{ sysbasics_zsh_pkgs }}"
-  when: "ansible_pkg_mgr != 'atomic_container'"
-
 - name: Lookup zsh path
   command: which zsh
   register: which_zsh_results
   check_mode: no
   changed_when: false
 
-- name: Establish zsh as default user shell
-  user:
-    name: "{{ ansible_user_id }}"
-    shell: "{{ which_zsh_results.stdout }}"
-
 - block:
-  - name: Clone ohmyzsh
-    git:
-      repo: "{{ sysbasics_ohmyzsh_repo }}"
-      dest: "{{ ansible_user_dir }}/.oh-my-zsh"
-    when: "sysbasics_ohmyzsh_enable"
+  - name: Install core zsh pkgs
+    package:
+      name: "{{ item }}"
+    with_items: "{{ sysbasics_zsh_pkgs }}"
 
-  - name: Activate ohmyzsh
-    lineinfile:
-      dest: "{{ ansible_user_dir }}/.zshrc"
-      line: "{{ item.line }}"
-      regexp: "{{ item.regex }}"
-      create: yes
-    with_items:
-      - line: "export ZSH=$HOME/.oh-my-zsh"
-        regex: "^export ZSH="
-      - line: "source $ZSH/oh-my-zsh.sh"
-        regex: "^source .*/oh-my-zsh.sh$"
-    when: "sysbasics_ohmyzsh_enable"
+  - name: Establish zsh as default user shell
+    user:
+      name: "{{ ansible_user_id }}"
+      shell: "{{ which_zsh_results.stdout }}"
 
-  become_user: "{{ ansible_user_id }}"
+  become: yes
+
+- name: Clone ohmyzsh
+  git:
+    repo: "{{ sysbasics_ohmyzsh_repo }}"
+    dest: "{{ ansible_user_dir }}/.oh-my-zsh"
+  when: "sysbasics_ohmyzsh_enable"
+
+- name: Activate ohmyzsh
+  lineinfile:
+    dest: "{{ ansible_user_dir }}/.zshrc"
+    line: "{{ item.line }}"
+    regexp: "{{ item.regex }}"
+    create: yes
+  with_items:
+    - line: "export ZSH=$HOME/.oh-my-zsh"
+      regex: "^export ZSH="
+    - line: "source $ZSH/oh-my-zsh.sh"
+      regex: "^source .*/oh-my-zsh.sh$"
+  when: "sysbasics_ohmyzsh_enable"

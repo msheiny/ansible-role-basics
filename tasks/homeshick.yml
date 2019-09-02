@@ -1,25 +1,23 @@
 ---
-- block:
-  - name: Install homeshick
-    git:
-      repo: "{{ sysbasics_dotfiles_homeshick_repo }}"
-      dest: "~{{ sysbasics_dotfiles_username }}/.homesick/repos/homeshick"
+- name: Install homeshick
+  git:
+    repo: "{{ sysbasics_dotfiles_homeshick_repo }}"
+    dest: "~{{ sysbasics_dotfiles_username }}/.homesick/repos/homeshick"
 
-  - name: Clone dotfiles repo.
-    git:
-      repo: "{{ sysbasics_dotfiles_repo_url }}"
-      dest: "~{{ sysbasics_dotfiles_username }}/.homesick/repos/dotfiles"
-      version: "{{ sysbasics_dotfiles_repo_version }}"
-      force: "{{ sysbasics_dotfiles_force_clone }}"
-    register: clone_sysbasics_result
-    # The Ansible host will often have local dotfiles changes; press on.
-    ignore_errors: "{{ true if ansible_connection == 'local' else false }}"
+- name: Clone dotfiles repo.
+  git:
+    repo: "{{ sysbasics_dotfiles_repo_url }}"
+    dest: "~{{ sysbasics_dotfiles_username }}/.homesick/repos/dotfiles"
+    version: "{{ sysbasics_dotfiles_repo_version }}"
+    force: "{{ sysbasics_dotfiles_force_clone }}"
+  register: clone_sysbasics_result
+  # The Ansible host will often have local dotfiles changes; press on.
+  ignore_errors: "{{ true if ansible_connection == 'local' else false }}"
 
-  - name: Create symlinks for dotfiles.
-    shell: >
-      ~{{ sysbasics_dotfiles_username|quote }}/.homesick/repos/homeshick/bin/homeshick
-      symlink dotfiles --force --verbose
-      | awk '{ print $2 }' | sort | uniq
-    register: symlink_sysbasics_result
-    changed_when: "'identical' not in symlink_sysbasics_result.stdout"
-  become_user: "{{ sysbasics_dotfiles_username }}"
+- name: Create symlinks for dotfiles.
+  shell: >
+    ~{{ sysbasics_dotfiles_username|quote }}/.homesick/repos/homeshick/bin/homeshick
+    symlink dotfiles --force --verbose
+    | awk '{ print $2 }' | sort | uniq
+  register: symlink_sysbasics_result
+  changed_when: "'identical' not in symlink_sysbasics_result.stdout"
