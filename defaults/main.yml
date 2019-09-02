@@ -61,6 +61,10 @@ sysbasics_flatpak_remotes:
 
 sysbasics_flatpak_packages: []
 
-##### OSX / SilverBlue diversion ##############################
+##### SilverBlue diversion ####################################
 ###############################################################
-skip_pkg_tasks: "{{ true if ansible_pkg_mgr in ['atomic_container','homebrew'] else false }}"
+skip_pkg_tasks: "{{ true if ansible_pkg_mgr in ['atomic_container'] else false }}"
+
+##### OSX #####################################################
+###############################################################
+sysbasics_cask_accept_external_apps: true
