@@ -6,20 +6,20 @@
   become: no
   tags: always
 
-- include: pkgs.yml
+- include: "{{ansible_system}}_pkgs.yml"
   when: not skip_pkg_tasks
   tags: pkg
 
 - include: zsh.yml
   tags: zsh
 
-- include: vim.yml
-  tags: vim
-
 - include: homeshick.yml
   tags: homeshick
 
-- import_tasks: git.yml
+- include: vim.yml
+  tags: vim
+
+- include: git.yml
   tags: git
 
 - import_tasks: flathub.yml
